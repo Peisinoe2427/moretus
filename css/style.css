@@ -1,4 +1,33 @@
-:root {}
+:root {
+    --fs-2: clamp(0.651rem, 0.6241rem + 0.1199vw, 0.72rem);
+    --fs-1: clamp(0.7813rem, 0.7348rem + 0.2065vw, 0.9rem);
+    --fs0: clamp(0.9375rem, 0.8641rem + 0.3261vw, 1.125rem);
+    --fs1: clamp(1.125rem, 1.0149rem + 0.4891vw, 1.4063rem);
+    --fs2: clamp(1.35rem, 1.1904rem + 0.7092vw, 1.7578rem);
+    --fs3: clamp(1.62rem, 1.3941rem + 1.0039vw, 2.1973rem);
+    --fs4: clamp(1.944rem, 1.6299rem + 1.3958vw, 2.7466rem);
+    --fs5: clamp(2.3328rem, 1.9022rem + 1.9138vw, 3.4332rem);
+    --fs6: clamp(2.7994rem, 2.2155rem + 2.5951vw, 4.2915rem);
+    --fs7: clamp(3.3592rem, 2.5746rem + 3.4873vw, 5.3644rem);
+
+    --space-3xs: clamp(0.25rem, 0.2255rem + 0.1087vw, 0.3125rem);
+    --space-2xs: clamp(0.5rem, 0.4755rem + 0.1087vw, 0.5625rem);
+    --space-xs: clamp(0.6875rem, 0.6141rem + 0.3261vw, 0.875rem);
+    --space-s: clamp(0.9375rem, 0.8641rem + 0.3261vw, 1.125rem);
+    --space-m: clamp(1.1875rem, 1.0897rem + 0.4348vw, 1.4375rem);
+    --space-l: clamp(1.4375rem, 1.3397rem + 0.4348vw, 1.6875rem);
+    --space-xl: clamp(1.875rem, 1.7283rem + 0.6522vw, 2.25rem);
+    --space-2xl: clamp(2.375rem, 2.2038rem + 0.7609vw, 2.8125rem);
+    --space-3xl: clamp(2.8125rem, 2.5924rem + 0.9783vw, 3.375rem);
+    --space-4xl: clamp(3.3125rem, 3.0679rem + 1.087vw, 3.9375rem);
+    --space-5xl: clamp(3.75rem, 3.4565rem + 1.3043vw, 4.5rem);
+    --space-6xl: clamp(4.6875rem, 4.3207rem + 1.6304vw, 5.625rem);
+    --space-7xl: clamp(5.625rem, 5.1848rem + 1.9565vw, 6.75rem);
+    --space-8xl: clamp(6.5625rem, 6.0489rem + 2.2826vw, 7.875rem);
+    --space-9xl: clamp(7.5rem, 6.913rem + 2.6087vw, 9rem);
+    --space-10xl: clamp(8.4375rem, 7.7772rem + 2.9348vw, 10.125rem);
+    --space-11xl: clamp(9.375rem, 8.6413rem + 3.2609vw, 11.25rem);
+}
 
 
 html {
@@ -25,3 +54,101 @@ img {
     white-space: nowrap;
     width: 1px;
 }
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+    }
+}
+
+/* TYPOGRAPHY */
+h1,
+h2,
+h3,
+h4 {
+    font-family: "Cormorant Garamond", serif;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: var(--fs3);
+    padding-block-end: var(--space-xl);
+}
+
+h2 {
+    font-size: var(--fs2);
+    padding-block-start: var(--space-xl);
+    padding-block-end: var(--space-xs);
+}
+
+h3 {
+    font-size: var(--fs1);
+    padding-block-end: var(--space-xs);
+}
+
+p {
+    padding-block-end: var(--space-xs);
+}
+
+/* BUTTON */
+button {
+    padding-inline: var(--space-s);
+    padding-block: var(--space-m);
+    background-color: var(--white);
+    border-radius: var(--space-2xs);
+    font-size: var(--fs0);
+    text-transform: uppercase;
+    border-color: var(--black);
+}
+
+.primary {
+    border-color: var(--blue);
+    color: var(--blue);
+}
+
+
+
+
+@media screen and (min-width: 22.5em) {}
+
+@media screen and (min-width: 46.5em) {}
+
+@media screen and (max-width:80rem) {
+
+    /* BREADCRUMB */
+    .breadcrumb {
+        font-size: var(--fs-1);
+        padding-block: var(--space-s);
+    }
+
+    .breadcrumb__list {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+    }
+
+    .breadcrumb__item {
+        display: flex;
+        align-items: center;
+    }
+
+    .breadcrumb__link {
+        text-decoration: none;
+        color: var(--blue);
+    }
+
+    .breadcrumb__item+.breadcrumb__item::before {
+        content: "/";
+        margin: 0 3px;
+        color: var(--lightGrey);
+    }
+
+    .breadcrumb__item--current {
+        font-weight: bold;
+    }
+}
+
+@media screen and (min-width: 80em) {}
