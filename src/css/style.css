@@ -325,3 +325,14 @@ body {
     justify-content: flex-start;
 }
 }
+
+
+
+
+
+
+/* HERO */
+.hero{
+    background-color: var(--blue);
+    color: var(--white);
+}
