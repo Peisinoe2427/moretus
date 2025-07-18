@@ -36,3 +36,13 @@ columns.forEach(col => {
         selectedLanguage = null;
     });
 });
+
+
+
+// gsap.to(".hidden", {
+//   opacity: 1,
+//   scale: 1,
+//   pointerEvents: "auto",
+//   visibility: "visible",
+//   duration: 1
+// });
