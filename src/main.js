@@ -6,40 +6,76 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { TextPlugin } from "gsap/TextPlugin";
 
-let selectedLanguage = null;
+// INK LANGUGAGES GAMES
+const resetFeedback= (message, type = 'neutral') =>{
+    const feedback = document.querySelector('.feedback');
+    feedback.innerHTML = message;
+    feedback.className = `feedback feedback--${type}`;
+}
 
-const inkButtons = document.querySelectorAll('.ink-btn');
-const columns = document.querySelectorAll('.column');
-const feedback = document.querySelector('.feedback');
+const resetInkSelection =()=> {
+    const inkOptions = document.querySelectorAll('.ink-option');
+    inkOptions.forEach(option => option.classList.remove('selected'));
 
+    const checkedRadio = document.querySelector('input[name="language"]:checked');
+    if (checkedRadio) checkedRadio.checked = false;
+}
 
-// INK GAME
-// When user clicks an ink bottle
-inkButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-    selectedLanguage = btn.dataset.language;
-    feedback.textContent = `You selected: ${selectedLanguage}`;
+const checkIfGameComplete =() =>  {
+    const disabledInks = document.querySelectorAll('.ink-option[style*="pointer-events: none"]');
+    const totalInks = document.querySelectorAll('.ink-option');
+
+    if (disabledInks.length === totalInks.length) {
+        resetFeedback("Well done! You&#39;ve unlocked the languages of the Elephant Bible!", 'celebration');
+    }
+}
+
+const initInkGame =() => {
+    let selectedLanguage = null;
+
+    const radios = document.querySelectorAll('input[name="language"]');
+    const sampleButtons = document.querySelectorAll('.sample-btn');
+
+    radios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            selectedLanguage = radio.dataset.language;
+            resetFeedback(`Now pick the text sample you think matches!`, 'neutral');
+
+            resetInkSelection();
+            radio.closest('.ink-option').classList.add('selected');
+        });
     });
-});
 
-// When user clicks a column
-columns.forEach(col => {
-    col.addEventListener('click', () => {
-        if (!selectedLanguage) {
-            feedback.textContent = "Choose an ink first!";
-            return;
-        }
+    sampleButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (!selectedLanguage) {
+                resetFeedback("&#9888;<br>Choose an ink first!", 'wrong');
+                return;
+            }
 
-        if (col.dataset.language === selectedLanguage) {
-            col.classList.add('inked');
-            feedback.textContent = `Correct! You inked the ${selectedLanguage} script.`;
-        } else {
-            feedback.textContent = `Oops, that's not the ${selectedLanguage} script. Try again!`;
-        }
+            const chosenSample = btn.dataset.language;
 
-        selectedLanguage = null;
+            if (chosenSample === selectedLanguage) {
+                resetFeedback("&#10004;<br>That's a match!", 'correct');
+
+                const usedInk = document.querySelector(`input[name="language"][data-language="${selectedLanguage}"]`).closest('.ink-option');
+                usedInk.style.opacity = '0.5';
+                usedInk.style.pointerEvents = 'none';
+
+                btn.style.opacity = '0.5';
+                btn.style.pointerEvents = 'none';
+                checkIfGameComplete();
+            } else {
+                resetFeedback("&#10007;<br>Ink spilled! Try another combination.", 'wrong');
+                btn.classList.add('wrong');
+            }
+
+            selectedLanguage = null;
+            resetInkSelection();
+        });
     });
-});
+}
+
 
 
 // GSAP
@@ -111,6 +147,8 @@ const init = () =>{
 
         heroAnimation();
     });
+
+    initInkGame();
 }
 
 init();
