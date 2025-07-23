@@ -79,18 +79,49 @@ const initInkGame =() => {
 
 
 // GSAP
-// gsap.to(".hidden", {
-//   opacity: 1,
-//   scale: 1,
-//   pointerEvents: "auto",
-//   visibility: "visible",
-//   duration: 1
-// });
+const bubbles = ()=>{
+    gsap.utils.toArray('.bubble').forEach((bubble, i) => {
+        gsap.from(bubble, {
+            scrollTrigger: {
+                trigger: bubble,
+                start: 'top 50%',
+                toggleActions: 'play none none none',
+            },
+        opacity: 0,
+        rotate: gsap.utils.random(-3, 3),
+        yPercent: -10,
+        duration: 0.6,
+        ease: 'power1.out',
+        delay: i * 0.05,
+        });
+    });
+}
+
+const lines = () => {
+    gsap.utils.toArray('.lineText').forEach((lineText, i) => {
+        gsap.fromTo(lineText,
+        { opacity: 0, scaleX: 0, transformOrigin: "left" },
+        {
+            opacity: 1,
+            scaleX: 1,
+            duration: 0.6,
+            ease: 'back.out(1.4)',
+            delay: i * 0.05,
+            scrollTrigger: {
+            trigger: lineText,
+            start: 'top 70%',
+            toggleActions: 'play none none none',
+            },
+        }
+        );
+    });
+};
+
 const heroAnimation = ()=>{
     const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
 
     tl.fromTo(".hero_city", 
-        { y: 100, opacity: 0 }, 
+        { y: -100, opacity: 0 }, 
         { y: 0, opacity: 0.75, duration: 3 }
     , 0)
 
@@ -141,11 +172,132 @@ const heroAnimation = ()=>{
     return tl;
 }
 
+const ch1 =()=>{
+    gsap.from(".ch1", {
+        y: '50%',
+        opacity: 0,
+        duration: 2,
+        ease: "power4.out",
+        scrollTrigger: {
+            trigger: ".hero",
+            start: "bottom 85%",
+            toggleActions: "play none none none"
+        }
+    });
+}
+const ch1Pt2 =()=>{
+    const tl = gsap.timeline({ 
+        scrollTrigger: {
+            trigger: ".ch1__text",
+            start: "top 75%",
+            toggleActions: "play none none none"
+        }
+    });
+
+    tl.from(".ch1_pt2_text", { 
+        x: "-10vw",
+        duration: 1.5,
+        opacity: 0,
+        ease: "power2.out"
+        }
+    , 0)
+
+    tl.from(".img_angel-read", { 
+        opacity: 0,
+        scale: 1.8,
+        rotation: 10,
+        ease: "back.inOut(1.7)",
+        duration: 1,
+        }
+    , 0)
+
+    return tl;
+}
+
+// CHAPTER 2
+const titleUnion= ()=>{
+    gsap.from(".img_lovers", {
+        opacity: 0,
+        scale: 1.8,
+        rotation: 10,
+        ease: "back.inOut(1.7)",
+        duration: 1,
+        scrollTrigger: {
+            trigger: ".ch1-part2",
+            start: "bottom 70%",
+            toggleActions: "restart none restart none",
+            scrub: false,
+        }
+    }),0;
+}
+const unionAnimation = ()=>{
+    const tl = gsap.timeline({ 
+    scrollTrigger: {
+        trigger: ".ch2",
+        start: "top center",
+        end: "center center",
+        scrub: 2,
+    },defaults: { ease: "sine.out", duration: 3 } });
+
+    tl.fromTo(".ch2__title--margin", 
+        { letterSpacing: "1em", opacity: 0 },
+        {
+            letterSpacing: "0.05em",
+            opacity: 1,
+            duration: 2,
+            ease: "power2.out"
+    }, 0);
+
+
+    tl.from(".img_hand-m", { 
+        x: '-40%',
+        }
+    , 0)
+
+    tl.from(".img_hand-j", {
+        x: '40%',
+    }, 0)
+
+    tl.from(".ch2__martina", {
+        x: '-50%',
+        opacity: 0,
+        scale: 0.9,
+    }, 1)
+
+    tl.from(".ch2__jan", {
+        x: '50%',
+        opacity: 0,
+        scale: 0.9,
+    }, 1)
+
+    return tl;
+}
+
+const cupidAnimation = ()=>{
+    gsap.to(".img_arrow", {
+        x: '-120vw',
+        scrollTrigger: {
+            trigger: ".ch2__text",
+            start: "top center",
+            toggleActions: "restart none reset none",
+            scrub: false,
+        },
+        duration: 2,
+    });
+}
+
 const init = () =>{
     window.addEventListener("load", () => {
         gsap.registerPlugin(ScrollTrigger,ScrollToPlugin,TextPlugin);
 
         heroAnimation();
+        bubbles();
+        lines();
+        ch1();
+        ch1Pt2();
+        titleUnion();
+        unionAnimation();
+        cupidAnimation();
     });
 
     initInkGame();
