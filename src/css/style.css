@@ -676,10 +676,10 @@ header {
     padding-block-start: var(--space-2xl);
     padding-inline: var(--space-xl);
 }
-
 .ch4_CTABigger {
     display: none;
 }
+
 
 
 /* ------------------- CHAPTER 4 (INK IT GAME) ---------------------- */
@@ -781,6 +781,7 @@ fieldset picture{
 
 
 /* ------------------- CHAPTER 5 ---------------------- */
+
 .ch5{
     display: flex;
     flex-direction: column;
@@ -795,6 +796,7 @@ fieldset picture{
 .bubble--door{
     position: relative;
     margin-block-start: -1.5rem;
+    margin-block-end: -5rem;
     transform: rotate(-5deg);
     z-index: 10;
 }
