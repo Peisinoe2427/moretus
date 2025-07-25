@@ -412,11 +412,11 @@ header {
 }
 
 /* ------------------- CHAPTER1 ---------------------- */
-.drag__zone{
+.sayIt__zone{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
-.drag__bubble{
+.sayIt__bubble{
     grid-column: 3/4;
 }
 .img_ink{
@@ -430,11 +430,24 @@ header {
     grid-row: 1/2;
     align-self: end;
     justify-self: center;
+    z-index: 100;
 }
 .img_letters{
     grid-column: 1/4;
     grid-row: 2/4;
     justify-self: center;
+    display: grid;
+    z-index: 50;
+}
+.img_ink0, .img_ink1, .img_ink2, .img_ink3, .img_ink4, .img_inking, .img_inked{
+    grid-column: 1/2;
+    grid-row: 1/2;
+}
+.img_ink1,
+.img_ink2,
+.img_ink3,
+.img_ink4, .img_inking, .img_inked{
+    opacity: 0;
 }
 .img_plantin{
     display: none;
@@ -475,13 +488,22 @@ header {
     flex-direction: column; 
     align-items: flex-end;
 }
-.drag__doing{
+.sayIt__doing{
     padding-block-end: var(--space-6xl);
 }
 
 .ch1__CTA{
     padding-block-start: var(--space-l);
 }
+
+/* SAY IT GAME */
+.img_ball img {
+    transition: transform 0.4s ease, opacity 0.2s ease;
+    transform-origin: center;
+}
+
+
+
 
 /* ------------------- CHAPTER 2 ---------------------- */
 .ch2__title{
@@ -811,12 +833,25 @@ fieldset picture{
     align-items: flex-end;
 }
 .img_crown{
-    scale: 0.7;
-    align-self: flex-end;
+    scale: 0.3;
+    align-self: center;
     margin-inline-end: -2rem;
+    animation: float 3s ease-in-out infinite;
 }
 .ch5__text{
     margin-block-start: -4rem;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0)rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
 }
 
 /* ------------------- CHAPTER 6 ---------------------- */
@@ -851,12 +886,22 @@ fieldset picture{
     grid-column: 1/2;
     grid-row: 1/3;
 }
+.img_canon{
+    z-index: 4;
+}
+.img_smoke{
+    z-index: 3;
+    will-change: transform, opacity;
+    transform-origin: center center;
+}
+
 .img_ballCanon{
     grid-column: 2/3;
     grid-row: 1/2;
     scale: 0.4;
     align-self: start;
     margin-block-start: -3rem;
+    z-index: 2;
 }
 
 /* ------------------- CHAPTER 7 ---------------------- */
@@ -924,15 +969,56 @@ fieldset picture{
     display: grid;
     padding-block: var(--space-l);
 }
-.img_mirror, .img_man1, .img_man2, .img_woman, .img_mirrorJan, .img_mirrorMartina{
+
+.img_mirror{
     grid-column: 1/2;
     grid-row: 1/2;
+    z-index: 1;
+}
+.img_man1, .img_man2, .img_woman, .img_mirrorJan, .img_mirrorMartina{
+    grid-column: 1/2;
+    grid-row: 1/2;
+    opacity: 0;
+    z-index: 2;
+    animation: fadeSequence 25s ease-in-out infinite;
+    animation-fill-mode: forwards;
+}
+.img_mirrorJan {
+    animation-delay: 0s;
+}
+.img_man1 {
+    animation-delay: 5s;
+}
+.img_man2 {
+    animation-delay: 10s;
+}
+.img_mirrorMartina {
+    animation-delay: 15s;
+}
+.img_woman {
+    animation-delay: 20s;
 }
 .concl__CTA, .concl__CTA div{
     display: grid;
     place-items: center;
 }
-
+@keyframes fadeSequence {
+    0% {
+        opacity: 0;
+    }
+    8% {
+        opacity: 1;
+    }
+    20% {
+        opacity: 1;
+    }
+    28% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
 
 @media screen and (min-width: 25.62em){
     .img_book {
@@ -984,15 +1070,15 @@ fieldset picture{
         grid-template-columns: repeat(8, 1fr);
         gap: var(--space-xs);
     }
-    .drag__intro{
+    .sayIt__intro{
         grid-column: 5/9;
         grid-row: 1/2;
     }
-    .drag__zone{
+    .sayIt__zone{
         grid-column: 1/5;
         grid-row: 1/4;
     }
-    .drag__doing{
+    .sayIt__doing{
         grid-column: 4/8;
         grid-row: 2/4;
         padding-block-start: var(--space-6xl);
@@ -1000,6 +1086,9 @@ fieldset picture{
     }
     .img_letters{
         max-width: 80%;
+    }
+    .img_ink {
+        margin-block-start: -2.5rem;
     }
     .ch1__text{
         grid-column: 1/8;
@@ -1033,6 +1122,8 @@ fieldset picture{
     .name{
         align-items: flex-start;
     }
+
+
 
     /* CHAPTER 2 */
     .ch2__text{
@@ -1360,6 +1451,9 @@ fieldset picture{
     .ch1__quote{
         grid-column: 2/8;
     }
+    .img_ink {
+        margin-block-start: -3.5rem;
+    }
 
     /* CHAPTER 3 */
     .ch2__text1 {
@@ -1469,6 +1563,7 @@ fieldset picture{
     .ch6__text{
         padding-block-start: var(--space-s);
     }
+    
 
 }
 
@@ -1524,14 +1619,14 @@ fieldset picture{
 
     /* INTRO */
 
-    .drag__doing{
+    .sayIt__doing{
         grid-column: 6/9;
         padding-block-start: 0;
         padding-inline-start: 0;
     }
     .img_letters {
         max-width: 100%;
-        justify-self: right;
+
     }
 
     /* CHAPTER 2 */

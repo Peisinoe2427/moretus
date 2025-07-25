@@ -6,30 +6,225 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { TextPlugin } from "gsap/TextPlugin";
 
+
 let tapCount = 0;
 let tapTimer = null;
+let inkStep = 0;
+const maxSteps = 4;
+const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+let isAnimating = false;
+
+const zone = document.querySelector(".sayIt__zone");
+const inkBall = document.querySelector(".img_ball img");
 const closedDoor = document.querySelector(".js-door-closed");
 const openDoor = document.querySelector(".js-door-open");
 const closedDoorImg = closedDoor?.querySelector("img");
 const sectionP1 = document.querySelector(".ch5__p1");
 const crownImg = document.querySelector(".img_crown");
 const textBlock = document.querySelector(".ch5__text");
+const inkTargets = [
+    { position: "top-right" },
+    { position: "top-left" },
+    { position: "center" },
+    { position: "bottom-center" }
+];
 
+
+
+// UTILITY
 const resetFeedback= (message, type = 'neutral') =>{
     const feedback = document.querySelector('.feedback');
     feedback.innerHTML = message;
     feedback.className = `feedback feedback--${type}`;
 }
-
 const setDisplayResponsive = (el, largeDisplay = "grid", smallDisplay = "block") => {
     const isLargeScreen = window.matchMedia("(min-width: 41em)").matches;
     el.style.display = isLargeScreen ? largeDisplay : smallDisplay;
 };
+const  animateIfVisible = (el, config) =>{
+    if (el && el.offsetParent !== null) {
+        gsap.from(el, config);
+    }
+}
+const hideWithJs=()=>{
+    crownImg.style.display = "none";
+    textBlock.style.display = "none";
+    sectionP1.style.display = "none";
+}
+const setDirection =()=>{
+    if (!isMobile) {
+        document.querySelector(".directionInk").textContent = "Hover up-down the mouse twice to ink the letters";
+    }
 
+}
+
+
+
+// INK THE LETTER
+const getTargetPosition = (position, rect) =>{
+    // I had to look online and at our old pj5 assignements to figure out some calculations.  I do not take credit for these.
+    const isMobile = window.innerWidth <= 768;
+
+    const coords = {
+        "top-right": {
+            x: isMobile ? rect.left + rect.width * 0.78 : rect.left + rect.width * 0.85,
+            y: isMobile ? rect.top + rect.height * 0.17 : rect.top + rect.height * 0.25
+        },
+        "top-left": {
+            x: isMobile ? rect.left + rect.width * 0.6 : rect.left + rect.width * 0.7,
+            y: isMobile ? rect.top + rect.height * 0.17 : rect.top + rect.height * 0.25
+        },
+        "center": {
+            x: isMobile ? rect.left + rect.width * 0.6 : rect.left + rect.width * 0.7,
+            y: isMobile ? rect.top + rect.height * 0.3 : rect.top + rect.height * 0.35
+        },
+        "bottom-center": {
+            x: rect.left + rect.width * 0.5,
+            y: isMobile ? rect.top + rect.height * 0.4 : rect.top + rect.height * 0.5
+        }
+    };
+    return coords[position] || {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
+    };
+}
+const animateInkStep = () => {
+    const lettersImg = document.querySelector(".img_ink0 img");
+    const inkLayers = [
+        document.querySelector(".img_ink1"),
+        document.querySelector(".img_ink2"),
+        document.querySelector(".img_ink3"),
+        document.querySelector(".img_ink4")
+    ];
+    
+    if (!inkBall || !lettersImg || inkLayers.some(layer => layer === null)) {
+        console.warn("Missing elements");
+        return;
+    }
+    if (isAnimating) return;
+    isAnimating = true;
+
+    if (inkStep >= maxSteps) return;
+
+    const lettersRect = lettersImg.getBoundingClientRect();
+    const ballRect = inkBall.getBoundingClientRect();
+
+    const target = getTargetPosition(inkTargets[inkStep].position, lettersRect);
+
+    const deltaX = target.x - (ballRect.left + ballRect.width / 2) ;
+    const deltaY = target.y - (ballRect.top + ballRect.height / 2);
+
+    const tl = gsap.timeline({
+        onComplete: () => {
+            isAnimating = false;
+        }
+    });
+
+    //Wiggle in the ink
+    tl.fromTo(inkBall,  
+        { rotation: 0 },
+        {
+            rotation: -20,
+            duration: 0.25,
+            ease: "sine.inOut",
+            yoyo: true,
+            repeat: 2,
+            transformOrigin: "center bottom"
+        }
+    )
+    
+    .to(inkBall, {
+        x: `+=${deltaX}`,
+        y: `+=${deltaY}`,
+        duration: 0.5,
+        ease: "power1.inOut",
+    }, ">")
+
+    //Slam down
+    .to(inkBall, {
+        y: "+=1rem", 
+        rotation: 0,
+        duration: 0.25,
+        ease: "power2.in"
+    }, "+=0.2")
+
+    //Reveal ink layer
+    .to(inkLayers[inkStep], {
+        opacity: 1,
+        duration: 0.4
+    }, "<")
+
+    //Go back
+    .to(inkBall, {
+        x: 0,
+        y: 0,
+        duration:0.3,
+        ease: "power2.out",
+        clearProps: "transform"
+    }, "+=0.2")
+
+    if (inkStep === maxSteps - 1) {
+        tl.to(".img_inking", {
+            opacity: 1,
+            duration: 0.3
+        }, ">") 
+
+        .to(".img_inked", {
+            opacity: 1,
+            duration: 0.3
+        }, "+=1.2"); 
+    }
+
+    inkStep++;
+};
+const handleSwipeRightTrigger =(zoneElement)=> {
+    let startX = null;
+
+    zoneElement.addEventListener("touchstart", (e) => {
+        startX = e.touches[0].clientX;
+    });
+
+    zoneElement.addEventListener("touchend", (e) => {
+        if (startX === null) return;
+        const endX = e.changedTouches[0].clientX;
+
+        if (endX - startX > 80) {
+            animateInkStep();
+        }
+
+        startX = null;
+    });
+}
+const handleMouseFlickUpTrigger=(zoneElement)=> {
+    let lastY = null;
+    let flicks = [];
+    const flickThreshold = 15;
+    const flickWindow = 1000; 
+
+    zoneElement.addEventListener("mousemove", (e) => {
+        if (lastY === null) {
+            lastY = e.clientY;
+        return;
+        }
+
+        const deltaY = lastY - e.clientY;
+        const now = Date.now();
+
+        if (deltaY > flickThreshold) {
+            flicks.push(now);
+
+            flicks = flicks.filter(t => now - t < flickWindow);
+
+            if (flicks.length >= 2) {
+                animateInkStep();
+                flicks = [];
+            }
+        }
+
+        lastY = e.clientY;
+    });
+}
 // INK LANGUGAGES GAMES
-
-
-
 const resetInkSelection =()=> {
     const inkOptions = document.querySelectorAll('.ink-option');
     inkOptions.forEach(option => option.classList.remove('selected'));
@@ -37,7 +232,6 @@ const resetInkSelection =()=> {
     const checkedRadio = document.querySelector('input[name="language"]:checked');
     if (checkedRadio) checkedRadio.checked = false;
 }
-
 const checkIfGameComplete =() =>  {
     const disabledInks = document.querySelectorAll('.ink-option[style*="pointer-events: none"]');
     const totalInks = document.querySelectorAll('.ink-option');
@@ -46,7 +240,6 @@ const checkIfGameComplete =() =>  {
         resetFeedback("Well done! You&#39;ve unlocked the languages of the Elephant Bible!", 'celebration');
     }
 }
-
 const initInkGame =() => {
     let selectedLanguage = null;
 
@@ -132,13 +325,11 @@ const knockHandler = () => {
         });
     }
 };
-// GSAP
-const  animateIfVisible = (el, config) =>{
-    if (el && el.offsetParent !== null) {
-        gsap.from(el, config);
-    }
-}
 
+
+
+
+// GSAP
 const bubbles = ()=>{
     gsap.utils.toArray('.bubble').forEach((bubble, i) => {
         gsap.from(bubble, {
@@ -450,7 +641,6 @@ const wiggleDoor = (element) => {
         }
     );
 };
-
 const transitionIntoCh5 = () => {
     const titleCh5 = document.querySelector(".ch5__title1");
     const bubble = document.querySelector(".bubble--door");
@@ -497,11 +687,58 @@ const transitionIntoCh5 = () => {
     );
 };
 
-const hideWithJs=()=>{
-    crownImg.style.display = "none";
-    textBlock.style.display = "none";
-    sectionP1.style.display = "none";
+//CHAPTER 6
+const cannonBall=()=>{
+    const ball = document.querySelector(".img_ballCanon");
+    const smoke = document.querySelector(".img_smoke");
+
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".ch6",
+            start: "top 45%",
+            toggleActions: "play none none none"
+        }
+    });
+    tl.fromTo(ball, 
+        { 
+            x: "0rem",
+            y: "0rem",
+            scale:0,
+            opacity:1
+        },
+        {
+            x: "10rem",
+            y: "-5rem",
+            scale:0.5,
+            opacity:0,
+            duration: 0.7,
+            ease: "power2.out",
+            onComplete: () => {
+                gsap.set(ball, {
+                    clearProps: "all"
+                });
+                gsap.set(ball, {
+                    opacity: 0
+                });
+            }
+        }
+    )
+    .fromTo(smoke,
+        { opacity: 0 },
+        {
+            opacity: 1,
+            duration: 0.6,
+            ease: "sine.inOut"
+        }, 
+    "<")
+
+    .to(smoke, {
+        opacity: 0,
+        duration: 2,
+        ease: "sine.out"
+    }, "+=0.5");
 }
+
 
 const init = () =>{
     window.addEventListener("load", () => {
@@ -518,11 +755,20 @@ const init = () =>{
         infoBible();
         bibleImg();
         ctaCh4();
-    });
+        cannonBall();
 
-    hideWithJs();
-    initInkGame();
-    initDoorInteraction();
+        hideWithJs();
+        setDirection();
+        initInkGame();
+        initDoorInteraction();
+
+        if (isMobile) {
+            handleSwipeRightTrigger(zone);
+        } else {
+            handleMouseFlickUpTrigger(zone);
+        }
+
+    });
 }
 
 init();
