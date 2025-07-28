@@ -143,27 +143,33 @@ a{
     text-align: center;
     margin-block: var(--space-2xs);
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, padding-inline 0.2s ease;
+    transition: transform 0.7s ease-in-out, box-shadow 0.6s ease;
 }
 .btn--third{
     border: var(--black) solid 0.15rem;
     color: var(--black);
-    transition: background-color 0.3 ease;
+    transition: background-color 0.8s ease;
 }
 .btn--primary{
     border: var(--blue) solid 0.15rem;
     color: var(--blue);
-    transition: background-color 0.5 ease-in-out;
+    transition: background-color 0.8s ease-in-out;
 }
 .btn--secondary {
     border: var(--yellow) solid 0.15rem;
     color: var(--yellow);
-    transition: background-color 0.5 ease-in-out;
+    transition: background-color 0.8s ease-in-out;
 }
 .btn--fourth {
     border: var(--white) solid 0.15rem;
     color: var(--white);
-    transition: background-color 0.5 ease-in-out;
+    transition: background-color 0.8s ease-in-out;
+}
+.btn--fifth {
+    border: var(--red) solid 0.15rem;
+    color: var(--red);
+    background-color: var(--white);
+    transition: background-color 0.8s ease-in-out;
 }
 .btn--head{
     display: block;
@@ -182,12 +188,10 @@ a{
 .btn:hover{
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    padding-inline: var(--space-2xl);
 }
 .btn:active {
     transform: scale(0.97);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    padding-inline: var(--space-2xl);
 }
 .btn--head:hover{
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
@@ -196,7 +200,13 @@ a{
 .btn--secondary:hover {
     background-color: var(--white);
 }
-.btn--third:hover, .btn--fourth:hover, .btn--primary:hover {
+.btn--fourth:hover{
+    background-color: var(--red);
+}
+.btn--fifth:hover{
+    background-color: transparent;
+}
+.btn--third:hover,  .btn--primary:hover {
     background-color: var(--yellow);
 }
 .button-error{
@@ -328,6 +338,9 @@ header {
 .line--yellow{
     background-color: var(--yellow);
 }
+.line--black {
+    background-color: var(--black);
+}
 
 /* ------------------- BUBBLES ---------------------- */
 .bubble{
@@ -338,10 +351,10 @@ header {
     width: 7em;
     height: 7em;
     border-radius: 50%;
-    background-color: var(--yellow);
+    background-color: var(--red);
     font-weight: 700;
     line-height: 1.15;
-    
+    color: var(--white);
 }
 .bubble p {
     padding: 0;
@@ -618,41 +631,24 @@ header {
 .ch3_error {
     display: none;
 }
-.ch3__separator {
-    position: relative;
-    height: auto;
-}
-.separator-wrapper {
-    position: relative;
-    height: 8rem;
-}
-.img_ring {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-90deg) scale(0.5);
-    transform-origin: center;
-}
-.ch3__part2{
-    display: grid;
-    grid-template-columns: 0.01fr 1fr;
-    gap: var(--space-m);
-}
-.part2__blueLine{
-    background-color: var(--yellow);
-}
-.part2__text h3{
-    padding-block-start: 0;
-}
-.ch3_CTA{
+
+/* CHAPTER 3 PT 2 */
+.ch3__p2{
+    background: var(--black);
+    color: var(--white);
+    padding-inline: var(--space-8xl);
+    padding-block: var(--space-2xl);
     display: flex;
-    flex-direction: column;
-    place-items:unset;
-    text-align: left;
-    margin-block-start: var(--space-3xl);
-    padding-inline: var(--space-xl);
+    gap: var(--space-xl);
 }
 
+.img_ring{
+    align-self: center;
+    scale: 1.5;
+}
+.ch3_CTA{
+    padding-block-start: var(--space-xl);
+}
 
 
 /* ------------------- CHAPTER 4 ---------------------- */
@@ -1177,13 +1173,16 @@ fieldset picture{
     }
 
     /* CHAPTER 3 */
+    .ch3{
+        padding-block-start: var(--space-2xl);
+    }
     .ch3__intro {
         display: grid;
         grid-template-columns: repeat(8, 1fr);
         gap: var(--space-xs);
     }
     .ch3__martina{
-        grid-column: 2/5;
+        grid-column: 1/5;
         grid-row: 1/3;
         align-self: start;
     }
@@ -1193,28 +1192,16 @@ fieldset picture{
         align-self: end;
         padding-bottom: 0;
     }
-    .ch3__head{
-        grid-column:2/9;
-        grid-row: 2/3;
-    }
-    .ch3__head{
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        grid-template-rows: 1.1fr 2fr 1.5fr;
-        gap: var(--space-xs);
-    }
-    .head1{
-        grid-column: 4/8;
-    }
-    .head2{
-        grid-column: 1/4;
+    .ch3__text{
+        grid-column:5/8;
         grid-row: 2/3;
     }
     .ch3_error{
-        grid-column: 1/8;
-        grid-row: 2/4;
+        grid-column: 1/9;
+        grid-row: 3/4;
+        padding-block-start: var(--space-l);
         display: grid;
-        grid-template-columns: 2fr 2.5fr;
+        grid-template-columns: 3fr 2fr;
         gap: var(--space-2xs);
     }
     .ch3__controls{
@@ -1229,7 +1216,7 @@ fieldset picture{
         background-size: cover;
         background-repeat: no-repeat;
         color: var(--black);
-        grid-column: 2/3;
+        grid-column: 1/2;
         box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.15);
         border-radius: 8px;
     }
@@ -1237,23 +1224,17 @@ fieldset picture{
         margin: var(--space-l);
     }
     .ch3__errorText{
-        grid-column: 1/2;
-        align-self: end;
+        grid-column: 2/3;
+        align-self: start;
+        padding-block-start: var(--space-m);
         display: flex;
-        align-items: flex-start;
-        justify-self: flex-end;
-        gap: 0.5rem;
+        gap: 0.8rem;
     }
     .feedback-text{
         font-weight: 700;
+        text-align: left;
     }
-    .ch3__separator{
-        grid-column: 1/9;
-    }
-    .ch3__part2,  .ch3_CTA{
-        grid-column: 2/7;
-        padding-inline: 0;
-    }
+
     .arrow-bounce{
         display: inline-block;
         animation: nudge-right 1s ease-in-out infinite alternate;
@@ -1308,7 +1289,7 @@ fieldset picture{
     }
     .ch4__section1{
         display: grid;
-        grid-template-columns: 0.75fr 0.25fr 1.2fr;
+        grid-template-columns: 0.35fr 0.25fr 1.2fr;
     }
     .ch4__text{
         grid-column: 2/4;
@@ -1439,18 +1420,13 @@ fieldset picture{
     }
 
     /* CHAPTER 7 */
-    .ch7{
-        margin-inline: var(--space-3xl);
-    }
     .ch7__bg {
-        background-image: url(/assets/scroll1.png);
-        background-size: contain;
-        padding-inline: var(--space-9xl);
-        padding-block: var(--space-6xl);
+        padding-inline: var(--space-xl);
         display: flex;
         flex-direction: column;
         min-height: 35rem;
     }
+
     .ch7__bg h3{
         margin-block-start: var(--space-xl);
     }
@@ -1584,10 +1560,20 @@ fieldset picture{
 
     /* CHAPTER 7 */
     .ch7 {
-        margin-inline: var(--space-6xl);
+        margin-inline: var(--space-2xl);
+        margin-block-end: var(--space-2xl);
+    }
+    .signature-pad{
+        max-height: 3rem;
     }
     .ch7__bg {
-        padding-inline: var(--space-11xl);
+        background-image: url(/assets/scroll1.png);
+        background-size: contain;
+        padding-inline: var(--space-9xl);
+        padding-block: var(--space-xl);
+        display: flex;
+        flex-direction: column;
+        min-height: 35rem;
     }
     .ch7__bg h3 {
         margin-block-start: var(--space-m);
@@ -1597,7 +1583,15 @@ fieldset picture{
         margin-block-end: -3rem;
         margin-inline-end: 0rem;
     }
-
+    .sign__buttons{
+        padding-block-start: var(--space-2xs);
+        padding-block-end: var(--space-2xl);
+    }
+}
+@media screen and (min-width: 55em ) {
+    .ch7__bg {
+        padding-inline: 13rem;
+    }
 }
 
 @media screen and (min-width: 62.75em) {
@@ -1613,22 +1607,27 @@ fieldset picture{
     }
 
     /* CHAPTER 3 */
-    .ch3__head {
-        grid-template-rows: 1.4fr 1fr 1.5fr;
+    .img_ring {
+        scale: 1;
     }
+    .ch3__p2 {
+        padding-inline: var(--space-11xl);
+        justify-content: center;
+        gap: var(--space-6xl);
+    }
+
 
     .ch4__pt2__title {
         max-width: 50%;
     }
-
     .ink-selection {
         margin-block-start: -4rem;
     }
-
     .ch5__text {
         padding-inline-start: 10rem;
         padding-inline-end: 16rem;
     }
+
     /* CHAPTER 7 */
     .ch7__bg {
         padding-inline: 14.5rem;
@@ -1654,6 +1653,9 @@ fieldset picture{
     /* CHAPTER 3 */
     .ch3__head {
         grid-template-rows: 1.8fr 1fr 1.5fr;
+    }
+    .ch7__bg {
+        padding-inline: 17rem;
     }
 }
 
@@ -1725,6 +1727,10 @@ fieldset picture{
     }
 
     /* CHAPTER 4 */
+    .ch4__section1 {
+        display: block;
+        padding-inline-end: 25rem;
+    }
     .img_elephant, .img_book{
         display: none;
     }
@@ -1738,5 +1744,11 @@ fieldset picture{
     .ch7__bg {
         padding-inline: 18rem;
     }
+    .bubble--sign {
+        margin-block-start: -4rem;
+        margin-block-end: -1rem;
+        margin-inline-end: -3rem;
+    }
+    
     
 }

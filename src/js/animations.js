@@ -347,7 +347,7 @@ const cupidAnimation = ()=>{
 const glow =()=>{
     gsap.to(".img_rays", {
         opacity: 0.6,
-        scale: 1.03,
+        scale: 1.05,
         duration: 1.2,
         repeat: -1,
         yoyo: true,
@@ -358,7 +358,7 @@ const errorAnimation = ()=>{
     const tl = gsap.timeline({ 
     scrollTrigger: {
         trigger: ".ch3__martina",
-        start: "bottom 30%",
+        start: "bottom 50%",
     }});
 
     tl.from(".ch3_error_interaction", { 
