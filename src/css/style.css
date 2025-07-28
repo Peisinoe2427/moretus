@@ -66,12 +66,7 @@ img {
     white-space: nowrap;
     width: 1px;
 }
-/* .hidden-animated {
-    opacity: 0;
-    transform: scale(0.95);
-    pointer-events: none;
-    visibility: hidden;
-} */
+
 
 @media (prefers-reduced-motion: reduce) {
     *,
@@ -1246,6 +1241,7 @@ fieldset picture{
         align-self: end;
         display: flex;
         align-items: flex-start;
+        justify-self: flex-end;
         gap: 0.5rem;
     }
     .feedback-text{

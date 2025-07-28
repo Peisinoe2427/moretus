@@ -64,7 +64,7 @@
             <div class="margins hero__text">
                 <div class="lineText line--red "></div>
                 <p class="large">In 1557, a curious teenager named <strong>Jan Moerentorf</strong> stepped into the buzzing world of Antwerp.</p>
-                <a href="/" class="btn btn--fourth">Begin the Journey</a>
+                <a href="/" class="btn btn--fourth heroButton">Begin the Journey</a>
             </div>
 
             <picture class="hero_city">
@@ -78,7 +78,7 @@
                 /assets/hero/city/city_faxtum_c_scale,w_1280.avif 1280w" 
                 type="image/avif">
                 <img
-                sizes="(max-width: 1280px) 100vw, 1280px"
+                fetchpriority="high" sizes="(max-width: 1280px) 100vw, 1280px"
                 srcset="
                 /assets/hero/city/city_hxtomz_c_scale,w_822.png 822w,
                 /assets/hero/city/city_hxtomz_c_scale,w_883.png 883w,
@@ -1348,7 +1348,7 @@
         </section>
     </footer>
     
-    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="./src/js/main.js" defer></script>
 </body>
 
 </html>
