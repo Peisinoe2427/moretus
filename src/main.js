@@ -1,5 +1,3 @@
-import "./css/reset.css";
-import "./css/style.css";
 import gsap from "gsap";
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -28,7 +26,12 @@ const inkTargets = [
     { position: "center" },
     { position: "bottom-center" }
 ];
-
+const actualErrors = ["possesed", "bookss", "listenn", "earnned"];
+let words = [];
+let currentIndex = 0;
+let isDrawing = false;
+let hasDrawn = false;
+let ctx, canvas, blankCanvasData;
 
 
 // UTILITY
@@ -50,6 +53,8 @@ const hideWithJs=()=>{
     crownImg.style.display = "none";
     textBlock.style.display = "none";
     sectionP1.style.display = "none";
+    document.querySelector(".ch7").style.paddingBlockEnd = "0";
+    document.querySelector(".ch8").style.display="none";
 }
 const setDirection =()=>{
     if (!isMobile) {
@@ -57,7 +62,6 @@ const setDirection =()=>{
     }
 
 }
-
 
 
 // INK THE LETTER
@@ -326,6 +330,151 @@ const knockHandler = () => {
     }
 };
 
+//FIND THE ERRORS
+const initCorrectionGame=()=> {
+    const paragraph = document.querySelector(".ch3_error_interaction p");
+    const rawWords = paragraph.innerText.split(/\s+/);
+
+    paragraph.innerHTML = rawWords.map((word, i) => {
+        const cleanWord = word.replace(/[.,;:!?]/g, "");
+        return `<span class="word" data-word="${cleanWord}" data-index="${i}">${word}</span>`;
+    }).join(" ");
+
+    words = Array.from(document.querySelectorAll(".word"));
+
+    focusWord(currentIndex);
+
+    document.addEventListener("keydown", handleKeyNavigation);
+    document.getElementById("prevError").addEventListener("click", () => handleKeyNavigation(null, "ArrowLeft"));
+    document.getElementById("nextError").addEventListener("click", () => handleKeyNavigation(null, "ArrowRight"));
+    document.getElementById("markFound").addEventListener("click", () => handleKeyNavigation(null, "mark"));
+}
+const handleKeyNavigation=(e, source)=> {
+    const key = e?.key || source;
+
+    if (key === "ArrowRight") {
+        currentIndex = (currentIndex + 1) % words.length;
+        focusWord(currentIndex);
+    } else if (key === "ArrowLeft") {
+        currentIndex = (currentIndex - 1 + words.length) % words.length;
+        focusWord(currentIndex);
+    } else if (key === "Enter" || key === "mark") {
+        if (e?.preventDefault) e.preventDefault();
+        checkCurrentWord();
+    }
+}
+const focusWord=(index)=> {
+    words.forEach(word => word.classList.remove("focused"));
+    words[index].classList.add("focused");
+}
+const checkCurrentWord=() => {
+    const span = words[currentIndex];
+    if (span.dataset.found === "true") return;
+
+    const word = span.dataset.word;
+    if (actualErrors.includes(word)) {
+        span.classList.add("correct-flag");
+        span.dataset.found = "true";
+        span.innerHTML = `${span.innerText} <span class="found-mark">✔️</span>`;
+    } else {
+        span.classList.add("wrong-flag");
+        setTimeout(() => span.classList.remove("wrong-flag"), 1000);
+    }
+
+    checkIfAllFound();
+}
+const checkIfAllFound =()=> {
+    const found = words.filter(w => w.dataset.found === "true");
+
+    if (found.length === actualErrors.length) {
+        const feedback = document.querySelector(".feedback-text");
+        const arrow = document.querySelector(".ch3__errorText svg");
+
+        feedback.textContent = "Well done, you found all the mistakes!";
+        arrow.style.display = "none";
+    }
+}
+
+//SIGN IT
+const initSignaturePad = () => {
+    canvas = document.querySelector(".signature-pad");
+    ctx = canvas.getContext("2d");
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    ctx.strokeStyle = "#0451C7";
+    ctx.lineWidth = 2;
+
+    blankCanvasData = getBlankCanvasData(canvas);
+
+    canvas.addEventListener("mousedown", startDrawing);
+    canvas.addEventListener("mousemove", draw);
+    canvas.addEventListener("mouseup", stopDrawing);
+    canvas.addEventListener("mouseleave", stopDrawing);
+
+    canvas.addEventListener("touchstart", startDrawingTouch);
+    canvas.addEventListener("touchmove", drawTouch);
+    canvas.addEventListener("touchend", stopDrawing);
+    canvas.addEventListener("touchcancel", stopDrawing);
+
+    document.getElementById("validate-signature").addEventListener("click", validateSignature);
+    document.getElementById("reset-signature").addEventListener("click", resetSignature);
+};
+
+const resetSignature=()=> {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hasDrawn = false;
+    blankCanvasData = getBlankCanvasData(canvas);
+}
+const startDrawing=(e) =>{
+    const rect = canvas.getBoundingClientRect();
+    isDrawing = true;
+    ctx.beginPath();
+    ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+}
+const draw=(e)=> {
+    if (!isDrawing) return;
+    const rect = canvas.getBoundingClientRect();
+    ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+    ctx.stroke();
+    hasDrawn = true;
+}
+const stopDrawing=()=> {
+    if (!isDrawing) return;
+    isDrawing = false;
+}
+const startDrawingTouch=(e)=> {
+    e.preventDefault(); 
+    const touch = e.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    isDrawing = true;
+    ctx.beginPath();
+    ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+}
+const drawTouch=(e) =>{
+    if (!isDrawing) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+    ctx.stroke();
+    hasDrawn = true;
+}
+const getBlankCanvasData=(canvas)=> {
+    const temp = document.createElement("canvas");
+    temp.width = canvas.width;
+    temp.height = canvas.height;
+    return temp.toDataURL();
+}
+const validateSignature=() =>{
+    if (canvas.toDataURL() === blankCanvasData) {
+        alert("Please draw your signature before proceeding.");
+        return;
+    }
+
+    revealNextSection();
+}
+
 
 
 
@@ -358,9 +507,11 @@ const lines = () => {
             ease: 'back.out(1.4)',
             delay: i * 0.05,
             scrollTrigger: {
-            trigger: lineText,
-            start: 'top 70%',
-            toggleActions: 'play none none none',
+                trigger: lineText,
+                start: 'top 80%',
+                toggleActions: 'play none none none',
+                once: true,
+                immediateRender: false
             },
         }
         );
@@ -498,25 +649,24 @@ const unionAnimation = ()=>{
             opacity: 1,
             duration: 2,
             ease: "power2.out"
-    }, 0);
+    }, 0)
 
-
-    tl.from(".img_hand-m", { 
+    .from(".img_hand-m", { 
         x: '-40%',
         }
     , 0)
 
-    tl.from(".img_hand-j", {
+    .from(".img_hand-j", {
         x: '40%',
     }, 0)
 
-    tl.from(".ch2__martina", {
+    .from(".ch2__martina", {
         x: '-50%',
         opacity: 0,
         scale: 0.9,
     }, 1)
 
-    tl.from(".ch2__jan", {
+    .from(".ch2__jan", {
         x: '50%',
         opacity: 0,
         scale: 0.9,
@@ -535,6 +685,42 @@ const cupidAnimation = ()=>{
         },
         duration: 2,
     });
+}
+
+//CHAPTER 3
+const glow =()=>{
+    gsap.to(".img_rays", {
+        opacity: 0.6,
+        scale: 1.03,
+        duration: 1.2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+    });
+}
+const errorAnimation = ()=>{
+    const tl = gsap.timeline({ 
+    scrollTrigger: {
+        trigger: ".ch3__martina",
+        start: "bottom 30%",
+    }});
+
+    tl.from(".ch3_error_interaction", { 
+        x: '-80%',
+        opacity:0,
+        duration: 1,
+        ease: "power2.out"
+        }
+    , 0)
+
+    .from(".ch3__errorText", {
+        x: '-40%',
+        opacity:0,
+        duration: 1,
+        ease: "power2.out"
+    }, "<")
+
+    return tl;
 }
 
 // CHAPTER 4
@@ -739,6 +925,66 @@ const cannonBall=()=>{
     }, "+=0.5");
 }
 
+//CHAPTER 7
+const revealNextSection=()=> {
+    const tl = gsap.timeline();
+    gsap.set(".ch8", {
+        display: "grid",
+        opacity: 0,
+        y: 100,
+    });
+    gsap.set([".ch8__section1", ".ch8__section2"], {
+        autoAlpha: 0,
+        y: "-40%",
+    });
+    gsap.set(".ch7", {
+        paddingBlockEnd: "6rem",
+    });
+
+    tl.to(window, {
+        scrollTo: {
+            y: () => document.querySelector(".ch8").offsetTop - 40,
+        },
+        duration: 0.8,
+        ease: "power2.inOut"
+    }, 0)
+
+    .to(".ch8", {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out"
+    })
+
+    .from(".ch8__text", {
+        opacity: 0,
+        y: "-40%",
+        duration: 1,
+        ease: "power2.out"
+    }, "<+0.2")
+
+    .to(".ch8__section1", {
+        autoAlpha: 1,
+        duration: 1,
+        y:0,
+        ease: "power2.out"
+    }, "+=0.3")
+
+    .to(".ch8__section2", {
+        autoAlpha: 1,
+        duration: 1,
+        y:0,
+        ease: "power2.out"
+    }, "+=0.3")
+    
+    .call(() => {
+        ScrollTrigger.refresh();
+    });
+
+    return tl;
+}
+
+
 
 const init = () =>{
     window.addEventListener("load", () => {
@@ -752,15 +998,20 @@ const init = () =>{
         titleUnion();
         unionAnimation();
         cupidAnimation();
+        glow();
+        errorAnimation();
         infoBible();
         bibleImg();
         ctaCh4();
         cannonBall();
+        
 
         hideWithJs();
         setDirection();
         initInkGame();
         initDoorInteraction();
+        initCorrectionGame();
+        initSignaturePad();
 
         if (isMobile) {
             handleSwipeRightTrigger(zone);

@@ -7,17 +7,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;700&family=Noto+Sans+Syriac&family=Noto+Serif+Greek:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <link rel="stylesheet" href="./src/css/reset.css">
+    <link rel="stylesheet" href="./src/css/style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./assets/favicon/site.webmanifest">
     <title>Jan Moretus &#39; Story</title>
 </head>
 
 <body>
+    <noscript>
+        <div class="noJs">
+            <p><strong>⚠️ JavaScript is disabled</strong></p>
+            <p>You are missing out on fun interactions and animations! Please turn Javascript on if possible. </p>
+        </div>
+    </noscript>
     <div class="wrap_head">
         <header class="header margins">
-            <img src="/assets/logo/complete-logo.svg" alt="Logo" class="logo" width="131" height="65" />
+            <img src="./assets/logo/complete-logo.svg" alt="Logo" class="logo" width="131" height="65">
 
             <nav>
                 <h1 class="visually-hidden">Plantin Moretus Museum: From Big dreams to bold prints</h1>
@@ -168,7 +176,6 @@
                 src="/assets/hero/clouds/cloud-big_x05kxx_c_scale,w_1190.png"
                 alt="big cloud" width="1190" height="583">
             </picture>
-            </div>
         </section>
 
         <section class="ch1 margins">
@@ -182,7 +189,7 @@
                 <p> Walking into Plantin &#39;s printing workshop at 15, he heard the steady thud of presses and smelled fresh ink in the air. That first day, though the city felt new and overwhelming, Jan felt alive, his heart raced with curiosity and hope.</p>
             </article>
             <div class="sayIt__zone">
-                <div class="bubble sayIt__bubble">
+                <div class="bubble sayIt__bubble ">
                     <p class="directionInk">Swipe right to ink the letters</p>
                 </div>
                 <picture class="img_ink">
@@ -336,7 +343,6 @@
                         alt="lead letters in casing" width="361" height="299">
                     </picture>
                 </div>
-                
             </div>
             <article class="sayIt__doing">
                 <h3>Learning by Doing</h3>
@@ -349,6 +355,7 @@
         </section>
 
         <section class="ch1-part2 margins">
+            <h2 class="visually-hidden">More details about him</h2>
             <div class="ch1__text">
                 <div class="ch1__wrap-cupid">   
                     <picture class="img_angel-read">
@@ -395,7 +402,6 @@
                     <p>Christophe Plantin</p>
                 </div>              
             </div>
-
         </section>
 
         <section class="ch2"> 
@@ -535,13 +541,13 @@
                     <h2>Born to Lead: <br>Martina &#39;s Early Spark</h2>
                     <div class="ch3__martina">
                         <picture class="img_martinaBig">
-                            <source sizes="(max-width: 280px) 100vw, 280px"  
+                            <source sizes="(min-width: 1020px) 280px, (min-width: 840px) calc(19.38vw + 86px), (min-width: 660px) calc(35.63vw - 31px), 265px"  
                             srcset="
                             /assets/union/martina/martina-big_pj0yuk_c_scale,w_91.avif 91w,
                             /assets/union/martina/martina-big_pj0yuk_c_scale,w_280.avif 280w"
                             type="image/avif">
                             <img
-                            sizes="(max-width: 280px) 100vw, 280px"
+                            sizes="(min-width: 1020px) 280px, (min-width: 840px) calc(19.38vw + 86px), (min-width: 660px) calc(35.63vw - 31px), 265px"
                             srcset="
                             /assets/union/martina/martina-big_dkvef3_c_scale,w_91.png 91w,
                             /assets/union/martina/martina-big_dkvef3_c_scale,w_135.png 135w,
@@ -555,7 +561,7 @@
                             alt="Portrait of Martina" width="280" height="354">
                         </picture>
                         <picture class="img_rays">
-                            <source sizes="(max-width: 421px) 100vw, 421px"  
+                            <source sizes="(min-width: 1420px) 421px, (min-width: 840px) 30.71vw, (min-width: 660px) calc(35.63vw - 31px), (min-width: 480px) 421px, 93.13vw"  
                             srcset="
                             /assets/her/rays_boy8uq_c_scale,w_244.avif 244w,
                             /assets/her/rays_boy8uq_c_scale,w_331.avif 331w,
@@ -563,7 +569,7 @@
                             /assets/her/rays_boy8uq_c_scale,w_421.avif 421w" 
                             type="image/avif">
                             <img
-                            sizes="(max-width: 421px) 100vw, 421px"
+                            sizes="(min-width: 1420px) 421px, (min-width: 840px) 30.71vw, (min-width: 660px) calc(35.63vw - 31px), (min-width: 480px) 421px, 93.13vw"
                             srcset="
                             /assets/her/rays_n6qvmv_c_scale,w_244.png 244w,
                             /assets/her/rays_n6qvmv_c_scale,w_270.png 270w,
@@ -581,6 +587,7 @@
                         </picture>
                     </div>
                     <article class="ch3__head">
+                        <h3 class="visually-hidden">About her background</h3>
                         <p class="head1">In 1550, Martina Plantin was born, she would become, not just a daughter, but the <strong>spark that kept the family flame alive. </strong></p>
                     
                         <div class="head2">
@@ -588,15 +595,24 @@
                             <p>At 17, she was <strong>running the lace shop</strong> with her sister Catherine, while her brothers learned Latin.</p>
                         </div>
                         <div class="ch3_error">
-                            <p class="large">Find the errors in the text, like Martina used to do as a child.</p>
+                            <div class="ch3__errorText">
+                                <p class="feedback-text ">Find the 4 errors in the text, like Martina used to do as a child. Use the arrows to navigate and enter to validate.</p>
+                                <svg class="arrow-bounce" width="33" height="48" viewBox="0 0 33 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 3L20 19L3 35" stroke="#F6933B" stroke-width="6" stroke-miterlimit="10" stroke-linecap="square"/>
+                                </svg>
+                            </div>
                             <div class="ch3_error_interaction">
-                                <p>Long ago, in a small <em>villlage</em>, a boy named elio dreamed of greatness. He was not the strongest, nor the fastest, but he <em>possesed</em> a spark that set him apart; curiosity. Every day after tending goats, Elio would read old <em>bookss</em> left behind by travelers. The villagers laughed, saying dreams were for those with riches, but Elio kept learning. Over time, he began to teach others what he knew, and soon, people from far away came to <em>listenn</em>. Elio’s words inspired, his ideas spread like fire through dry brush. Decades later, he stood before kings, not to ask for power, but to share it. And so, from the humblest place, he became a voice that changed his world—not through force, but through persistence and thought. Greatness, it seemed, was not given, but <em>earnned</em>, day by day.</p>
+                                <p>Long ago, a boy named elio dreamed of greatness. He was not the strongest, but he <em>possesed</em> a spark that set him apart; curiosity. Every day Elio would read old <em>bookss</em> left behind by travelers. The villagers laughed, saying dreams were for those with riches, but Elio kept learning. Over time, he began to teach others what he knew, and soon, people from far away came to <em>listenn</em>. Elio’s words inspired many. Decades later, he stood before kings, not to ask for power, but to share it. And so, from the humblest place, he became a voice that changed his world—not through force, but through persistence and thought. Greatness, it seemed, was not given, but <em>earnned</em>, day by day.</p>
+                                <div class="ch3__controls">
+                                    <button id="prevError" class="button-error">←</button>
+                                    <button id="markFound" class="button-error">✓</button>
+                                    <button id="nextError" class="button-error">→</button>
+                                </div>
                             </div>
                         </div>
 
                     </article>
                 </div>
-                
                 
                 <div class="ch3__separator">
                     <div class="separator-wrapper">
@@ -631,7 +647,6 @@
                     <a href="/" class="btn btn--secondary">Meet the rest of the family</a>
                 </div>
             </div>
-            
         </section>
 
         <section class="ch4__pt1">
@@ -663,6 +678,7 @@
             </div>
     
             <article class="ch4__info">
+                <h3 class="visually-hidden">Info about the Bible</h3>
                 <div class="ch4_infoList">
                     <div class="ch4__listItem item1">
                         <p class="ch4_number">4</p>
@@ -737,7 +753,7 @@
 
                     <!-- Hebrew -->
                     <label class="ink-option">
-                        <input type="radio" name="language" value="hebrew" data-language="hebrew" class="visually-hidden" />
+                        <input type="radio" name="language" value="hebrew" data-language="hebrew" class="visually-hidden" >
                         <picture class="img_hebrew">
                             <source sizes="(max-width: 97px) 100vw, 97px"  
                             srcset="
@@ -757,7 +773,7 @@
 
                     <!-- Syriac -->
                     <label class="ink-option">
-                        <input type="radio" name="language" value="syriac" data-language="syriac" class="visually-hidden" />
+                        <input type="radio" name="language" value="syriac" data-language="syriac" class="visually-hidden" >
                         <picture class="img_syriac">
                             <source sizes="(max-width: 97px) 100vw, 97px"  
                             srcset="
@@ -777,7 +793,7 @@
 
                     <!-- Latin -->
                     <label class="ink-option">
-                        <input type="radio" name="language" value="latin" data-language="latin" class="visually-hidden" />
+                        <input type="radio" name="language" value="latin" data-language="latin" class="visually-hidden" >
                         <picture class="img_latin">
                             <source sizes="(max-width: 97px) 100vw, 97px"  
                             srcset="
@@ -797,7 +813,7 @@
 
                     <!-- Greek -->
                     <label class="ink-option">
-                        <input type="radio" name="language" value="greek" data-language="greek" class="visually-hidden" />
+                        <input type="radio" name="language" value="greek" data-language="greek" class="visually-hidden">
                         <picture class="img_greek">
                             <source sizes="(max-width: 97px) 100vw, 97px"  
                             srcset="
@@ -1012,12 +1028,15 @@
                     <p>His brother-in-law, <strong>Gillis Beys, demanded a share in the press inheritance</strong>. Jan faced down legal challenges, mediating debts and honouring family, while avoiding the break-up of the press.</p>
                     <p>By March 1590, a <strong>compromise was agreed</strong>: Jan and Martina retained the central Antwerp operation, while Gillis took over a Paris branch.</p>
                 </div>
-                <div>
+                <div class="ch7__sign">
                     <p class="large">Sign Here:</p>
-                    <div class="lineSign"></div>
+                    <canvas class="signature-pad" width="300" height="150"></canvas>
+                    <div class="sign__buttons">
+                        <button id="validate-signature" class="button-error">Validate Signature</button>
+                        <button id="reset-signature" class="button-error --btnBlack">Reset</button>
+                    </div>
                 </div>
             </div>
-            
         </section>
 
         <section class="ch8">
@@ -1290,7 +1309,7 @@
     <footer class="footer">
         <section class="footer__logos">
             <h4 class="visually-hidden">Logos</h4>
-            <img src="/assets/logo/complete-logo.svg" alt="Logo" class="logo" width="131" height="65" />
+            <img src="./assets/logo/complete-logo.svg" alt="Logo" class="logo" width="131" height="65">
             <p class="footer__mention">&#169;2024 Melisa Lauriola. All rights reserved</p>
         </section>
     
