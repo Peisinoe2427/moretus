@@ -433,7 +433,7 @@ header {
     grid-column: 1/6;
     grid-row: 4/7;
     z-index: 4;
-    padding-block-start: var(--space-3xl);
+    padding-block-start: var(--space-4xl);
 }
 
 /* ------------------- CHAPTER1 ---------------------- */
@@ -636,15 +636,14 @@ header {
 .ch3__p2{
     background: var(--black);
     color: var(--white);
-    padding-inline: var(--space-8xl);
+    padding-inline: var(--space-m);
     padding-block: var(--space-2xl);
     display: flex;
     gap: var(--space-xl);
 }
 
 .img_ring{
-    align-self: center;
-    scale: 1.5;
+    display: none;
 }
 .ch3_CTA{
     padding-block-start: var(--space-xl);
@@ -943,6 +942,9 @@ fieldset picture{
 .ch7__sign{
     padding-block-end: var(--space-m);
 }
+.ch7__sign p {
+    padding-block-end: var(--space-2xs);
+}
 .sign__buttons{
     display: flex;
     justify-content: center;
@@ -994,19 +996,20 @@ fieldset picture{
 }
 .concl__imgs{
     display: grid;
-    padding-block: var(--space-l);
 }
 
 .img_mirror{
     grid-column: 1/2;
     grid-row: 1/2;
     z-index: 1;
+    scale: 0.85;
 }
 .img_man1, .img_man2, .img_woman, .img_mirrorJan, .img_mirrorMartina{
     grid-column: 1/2;
     grid-row: 1/2;
     opacity: 0;
     z-index: 2;
+    scale: 0.85;
     animation: fadeSequence 25s ease-in-out infinite;
     animation-fill-mode: forwards;
 }
@@ -1048,6 +1051,9 @@ fieldset picture{
 }
 
 @media screen and (min-width: 25.62em){
+    .hero__text{
+        padding-block-start: var(--space-10xl);
+    }
     .img_book {
         margin-inline-end: 0;
         scale: 0.9;
@@ -1089,9 +1095,7 @@ fieldset picture{
     }
 
     /* CHAPTER 1 */
-    .ch1 {
-        margin-block-start: -8rem;
-    }
+
     .ch1, .ch1-part2{
         display: grid;
         grid-template-columns: repeat(8, 1fr);
@@ -1234,7 +1238,6 @@ fieldset picture{
         font-weight: 700;
         text-align: left;
     }
-
     .arrow-bounce{
         display: inline-block;
         animation: nudge-right 1s ease-in-out infinite alternate;
@@ -1247,6 +1250,16 @@ fieldset picture{
             transform: translateX(8px);
         }
     }
+
+    .ch3__p2 {
+        padding-inline: var(--space-8xl);
+    }
+
+    .img_ring {
+        display: block;
+        align-self: center;
+    }
+
 
     /* ERROR GAME */
     .word {
@@ -1606,6 +1619,10 @@ fieldset picture{
         margin-top: -3rem;
     }
 
+    .ch1 {
+        margin-block-start: -6rem;
+    }
+
     /* CHAPTER 3 */
     .img_ring {
         scale: 1;
@@ -1686,27 +1703,49 @@ fieldset picture{
     }
 
     /* HERO */
+    .hero{
+        background: linear-gradient(to bottom, var(--blue) 0%, var(--blue) 60%, white 100%);
+    }
+    .heroButton{
+        border-color: var(--black);
+        color: var(--black);
+        background-color: #f3efe9c1;
+        margin-block-start: var(--space-l);
+    }
+    .heroButton:hover{
+        border-color: var(--white);
+        color: var(--white);
+        background-color: var(--red);
+    }
+    .hero_jan{
+        margin-block-start: -2rem;
+    }
     .hero_cloud-front {
-        margin-top: -5rem;
+        margin-block-start: -7rem;
     }
     .hero_cloud-big {
         grid-column: 2/8;
-        grid-row: 2/6;
+        grid-row: 1/6;
         margin-left: -15rem;
-        align-self: start;
+        align-self: center;
         z-index: 1;
     }
     .hero_city{
         transform: none;
-        margin-block-start: -6rem;
+        margin-block-start: -8rem;
+        justify-self: center;
     }
     .hero__text{
         grid-column: 2/5;
-        grid-row: 3/5;
+        grid-row: 2/5;
         align-self: start;
         margin-block-start: 0;
         margin-inline-start: var(--space-6xl);
         color: black;
+    }
+
+    .ch1 {
+        margin-block-start: -15rem;
     }
 
     /* INTRO */
@@ -1742,7 +1781,7 @@ fieldset picture{
 
     /* CHAPTER 7 */
     .ch7__bg {
-        padding-inline: 18rem;
+        padding-inline: 21rem;
     }
     .bubble--sign {
         margin-block-start: -4rem;

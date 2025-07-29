@@ -541,7 +541,7 @@ const cannonBall=()=>{
         scrollTrigger: {
             trigger: ".ch6",
             start: "top 45%",
-            toggleActions: "play none none none"
+            toggleActions: "play none none none",
         }
     });
     tl.fromTo(ball, 
