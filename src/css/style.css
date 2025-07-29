@@ -204,7 +204,9 @@ a{
     background-color: var(--red);
 }
 .btn--fifth:hover{
-    background-color: transparent;
+    background-color:var(--red);
+    border-color: var(--white);
+    color: var(--white);
 }
 .btn--third:hover,  .btn--primary:hover {
     background-color: var(--yellow);
@@ -401,7 +403,7 @@ header {
     transform: scale(2.3);
     transform-origin: right;
     z-index: 0;
-    opacity: 0.75;
+    opacity: 0.5;
 }
 .hero_cloud-back{
     grid-column:2/6;
@@ -443,8 +445,9 @@ header {
 }
 .sayIt__bubble{
     grid-column: 3/4;
-    width: 8rem;
-    height: 8rem;
+    width: 8.5rem;
+    height: 8.5rem;
+    padding: var(--space-2xs);
 }
 .img_ink{
     grid-column: 1/2;
@@ -810,6 +813,12 @@ fieldset picture{
     background-color: var(--white);
     color: var(--red);
 }
+.feedback--celebration{
+    border: 4px solid green;
+    background-color: var(--white);
+    color: green;
+}
+
 
 
 /* ------------------- CHAPTER 5 ---------------------- */

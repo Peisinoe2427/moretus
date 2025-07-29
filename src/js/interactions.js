@@ -39,108 +39,6 @@ const resetFeedback= (message, type = 'neutral') =>{
 
 
 // INK THE LETTER
-
-// const animateInkStep = () => {
-//     let inkStep = 0; 
-//     let isAnimating = false;
-//     const maxSteps = 4;
-//     const lettersImg = document.querySelector(".img_ink0 img");
-//     const inkBall = document.querySelector(".img_ball img");
-//     const inkLayers = [
-//         document.querySelector(".img_ink1"),
-//         document.querySelector(".img_ink2"),
-//         document.querySelector(".img_ink3"),
-//         document.querySelector(".img_ink4")
-//     ];
-//     const inkTargets = [
-//         { position: "top-right" },
-//         { position: "top-left" },
-//         { position: "center" },
-//         { position: "bottom-center" }
-//     ];
-    
-    
-//     if (!inkBall || !lettersImg || inkLayers.some(layer => layer === null)) {
-//         console.warn("Missing elements");
-//         return;
-//     }
-//     if (isAnimating) return;
-//     isAnimating = true;
-
-//     if (inkStep >= maxSteps) return;
-
-//     const lettersRect = lettersImg.getBoundingClientRect();
-//     const ballRect = inkBall.getBoundingClientRect();
-
-//     const target = getTargetPosition(inkTargets[inkStep].position, lettersRect);
-
-//     const deltaX = target.x - (ballRect.left + ballRect.width / 2) ;
-//     const deltaY = target.y - (ballRect.top + ballRect.height / 2);
-
-//     const tl = gsap.timeline({
-//         onComplete: () => {
-//             isAnimating = false;
-//         }
-//     });
-
-//     //Wiggle in the ink
-//     tl.fromTo(inkBall,  
-//         { rotation: 0 },
-//         {
-//             rotation: -20,
-//             duration: 0.25,
-//             ease: "sine.inOut",
-//             yoyo: true,
-//             repeat: 2,
-//             transformOrigin: "center bottom"
-//         }
-//     )
-    
-//     .to(inkBall, {
-//         x: `+=${deltaX}`,
-//         y: `+=${deltaY}`,
-//         duration: 0.5,
-//         ease: "power1.inOut",
-//     }, ">")
-
-//     //Slam down
-//     .to(inkBall, {
-//         y: "+=1rem", 
-//         rotation: 0,
-//         duration: 0.25,
-//         ease: "power2.in"
-//     }, "+=0.2")
-
-//     //Reveal ink layer
-//     .to(inkLayers[inkStep], {
-//         opacity: 1,
-//         duration: 0.4
-//     }, "<")
-
-//     //Go back
-//     .to(inkBall, {
-//         x: 0,
-//         y: 0,
-//         duration:0.3,
-//         ease: "power2.out",
-//         clearProps: "transform"
-//     }, "+=0.2")
-
-//     if (inkStep === maxSteps - 1) {
-//         tl.to(".img_inking", {
-//             opacity: 1,
-//             duration: 0.3
-//         }, ">") 
-
-//         .to(".img_inked", {
-//             opacity: 1,
-//             duration: 0.3
-//         }, "+=1.2"); 
-//     }
-
-//     inkStep++;
-// };
-
 const handleSwipeRightTrigger = (zoneElement) => {
     let startX = null;
 
@@ -231,7 +129,7 @@ const initInkGame =() => {
             const chosenSample = btn.dataset.language;
 
             if (chosenSample === selectedLanguage) {
-                resetFeedback("&#10004;<br>That's a match!", 'correct');
+                resetFeedback("&#10004;<br>Right on! Jan would nod in approval.", 'correct');
 
                 const usedInk = document.querySelector(`input[name="language"][data-language="${selectedLanguage}"]`).closest('.ink-option');
                 usedInk.style.opacity = '0.5';

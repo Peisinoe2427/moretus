@@ -108,7 +108,7 @@ const heroAnimation = ()=>{
 
     tl.fromTo(".hero_city", 
         { y: -100, opacity: 0 }, 
-        { y: 0, opacity: 0.75, duration: 3 }
+        { y: 0, opacity: 0.5, duration: 3 }
     , 0)
 
     tl.from(".hero__text", {
